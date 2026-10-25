@@ -1,0 +1,11 @@
+APP_NAME=Meeti
+DATABASE_URL=postgresql://neondb_owner:npg_h5v0LzBIjCrK@ep-rough-field-b4kxig00-pooler.c-6.us-east-2.aws.neon.tech/neondb?uselibpqcompat=true&sslmode=require&channel_binding=require
+
+BETTER_AUTH_SECRET=5bacefbcb61e1231826892ff0e6f21cc84e600835f6f457e73c8260b675ff769
+BETTER_AUTH_URL=http://localhost:3000/
+
+EMAIL_HOST=sandbox.smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USER=84564ae234acc0
+EMAIL_PASS=95b6a21f67862b
+
