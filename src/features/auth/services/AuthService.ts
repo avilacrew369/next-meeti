@@ -1,4 +1,4 @@
-import { SignInInput, SignUpInput } from "@/src/features/auth/schemas/authSchema";
+import { ForgotPasswordInput, SetPasswordInput, SignInInput, SignUpInput } from "@/src/features/auth/schemas/authSchema";
 import { headers } from "next/headers"
 import { auth } from "@/src/lib/auth";
 import { authRepository, IAauthRepository } from "./AuthRepository";
@@ -89,10 +89,57 @@ class AuthService {
             success: ""
          }
 
-}
-         // Validar contraseña
-       
+    }
+    
+      async requestPasswordReset(input: ForgotPasswordInput) {
+        const user = await this.authRepository.userExists(input.email)
+        if(!user){
+            return {
+                error: 'El usuario no existe... verificalo...',
+                success: ''
+            }
         }
+        const { email } = input
+        await auth.api.requestPasswordReset({
+            body: {
+                email
+            }
+        })
+        
+        return {
+            error: '',
+            success: 'Hemos enviado un email con instrucciones'
+        }
+
+    }
+      async confirmPasswordReset(input: SetPasswordInput, token: string) {
+        const { newPassword } = input
+        try {
+            await auth.api.resetPassword({
+                body: {
+                    newPassword,
+                    token
+                }
+            })
+            return {
+                error: '',
+                success: 'Password restablecido corectamente.'
+
+            }
+        } catch (error) {
+            if(error instanceof APIError) {
+                return {
+                    error: 'Token no valido o Expirado',
+                    success: ''
+                }
+            }
+        }
+        return {
+            error: '',
+            success: ''
+        }
+    }
+ }
 
 
 

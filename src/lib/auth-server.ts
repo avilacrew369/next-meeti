@@ -1,10 +1,13 @@
 import { auth } from "./auth";
 import { headers } from "next/headers";
 
-
+// export const instant = false;
 export async function getServerSession() {
+
     const session = await auth.api.getSession({
-        headers: await headers()
+        headers: await headers(),
+        // force: "auto"
+
     })
     return session
 

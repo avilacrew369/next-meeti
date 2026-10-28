@@ -24,7 +24,7 @@ export default function RegisterForm() {
         }
                 if(success) {
                     toast.success(success)
-                        redirect('/auth/login')
+                        reset()
 
                 }
         }

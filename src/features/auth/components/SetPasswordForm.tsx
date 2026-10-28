@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { SetPasswordInput, SetPasswordSchema } from "../schemas/authSchema"
 import { redirect, useSearchParams } from "next/navigation"
-
+import { setPasswordAction } from "../actions/auth-actions"
+import toast from "react-hot-toast"
 
 export default function SetPasswordForm() {
 
@@ -18,9 +19,16 @@ export default function SetPasswordForm() {
         mode: 'all'
     })
 
-   
+    const onSubmit = async(data: SetPasswordInput) => {
+        const {error, success} = await setPasswordAction(data, token)
+        if(error) toast.error(error)
+        if(success){
+            toast.success(success)
+            redirect('/auth/login')
+        }
+    }
   return (
-    <Form >
+    <Form onSubmit={handleSubmit(onSubmit)}>
         <FormLabel  htmlFor="newPassword">Nuevo Password</FormLabel>
         <FormInput
             type="password"

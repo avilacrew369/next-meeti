@@ -10,7 +10,7 @@ import { redirect } from 'next/navigation';
 
 export default function LoginForm() {
 
-   const { register, handleSubmit, formState: { errors } } = useForm({
+   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(SignInSchema),
     mode: 'all',
   })
@@ -22,6 +22,7 @@ export default function LoginForm() {
       }
       if(success) {
         toast.success(success)
+        reset()
         redirect('/dashboard')
   }
 }
